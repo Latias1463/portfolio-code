@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remus Seah - IT Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --text-color: #333;
+            --light-gray: #f4f4f4;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-gray);
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        nav {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .intro {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .project-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Image carousel styles */
+        .image-carousel {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer; /* Show pointer cursor on images */
+            transition: opacity 0.3s;
+        }
+        
+        .project-img:hover {
+            opacity: 0.9; /* Slight opacity change on hover to indicate clickability */
+        }
+        
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .prev-button {
+            left: 10px;
+        }
+        
+        .next-button {
+            right: 10px;
+        }
+        
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background-color: white;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-description {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-tag {
+            background-color: var(--light-gray);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .about-section {
+            display: flex;
+            gap: 2rem;
+            margin: 4rem 0;
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .contact-section {
+            text-align: center;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-link {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-img {
+            display: block;
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-prev {
+            left: -70px;
+        }
+        
+        .lightbox-next {
+            right: -70px;
+        }
+        
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .lightbox-prev {
+                left: -10px;
+            }
+            
+            .lightbox-next {
+                right: -10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Remus Seah</h1>
+        <p>Applied Artificial Intellegence diploma student at Temasek Polytechnic</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section class="intro">
+            <h2>Welcome to My Portfolio</h2>
+            <p>Here you'll find my past projects and assignments</p>
+        </section>
+        
+        <section id="projects">
+            <h2>My Projects</h2>
+            <div class="projects">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="image-carousel">
+                        <div class="carousel-container" id="carousel1">
+                            <div class="carousel-slide">
+                                <img src="emotion bot screenshots\Screenshot 2025-02-09 183536.png" alt="The chatbot when you are happy" class="project-img" onclick="openLightbox('carousel1', 0)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="emotion bot screenshots\Screenshot 2025-02-09 185334.png" alt="The chatbot when you are upset" class="project-img" onclick="openLightbox('carousel1', 1)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="emotion bot screenshots\Screenshot 2025-02-09 200228.png" alt="Information saved from the chatbot" class="project-img" onclick="openLightbox('carousel1', 2)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="emotion bot screenshots\Screenshot 2025-04-08 172436.png" alt="SQL data on the users" class="project-img" onclick="openLightbox('carousel1', 3)">
+                            </div>
+                        </div>
+                        <button class="carousel-button prev-button" onclick="moveSlide('carousel1', -1)">&#10094;</button>
+                        <button class="carousel-button next-button" onclick="moveSlide('carousel1', 1)">&#10095;</button>
+                        <div class="carousel-dots" id="dots1"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Emotional support chatbot</h3>
+                        <div class="project-description-container" id="desc3">
+                            <p class="project-description">A rasa chatbot made for my NLP(Natural language processing). It records the details about each person using the bot and gives custom advice using the language model ollama.</p>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Rasa</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="image-carousel">
+                        <div class="carousel-container" id="carousel2">
+                            <div class="carousel-slide">
+                                <img src="recycle radar screenshots\1732724413680.jpeg" alt="Map with markers for bins nearby" class="project-img" onclick="openLightbox('carousel2', 0)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="recycle radar screenshots\1732724430242.jpeg" alt="Map with markers for bins nearby and your location" class="project-img" onclick="openLightbox('carousel2', 1)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="recycle radar screenshots\1732724522817.jpeg" alt="Submitting of new bins to the map" class="project-img" onclick="openLightbox('carousel2', 2)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="recycle radar screenshots\1732724582603.jpeg" alt="Updating of bins details" class="project-img" onclick="openLightbox('carousel2', 3)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="recycle radar screenshots\1732724639162.jpeg" alt="Project 2 - Image 3" class="project-img" onclick="openLightbox('carousel2', 4)">
+                            </div>
+                        </div>
+                        <button class="carousel-button prev-button" onclick="moveSlide('carousel2', -1)">&#10094;</button>
+                        <button class="carousel-button next-button" onclick="moveSlide('carousel2', 1)">&#10095;</button>
+                        <div class="carousel-dots" id="dots2"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Recycling bin mobile app</h3>
+                        <p class="project-description">A mobile app that helps people find nearby recycling bins. It is mainly used to encourage people to recycle more often. People can also submit bins that are not on the map and can find other types of bins such as e-waste and donation bins. It is written in flutter and uses firebase to store user and app data.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="image-carousel">
+                        <div class="carousel-container" id="carousel3">
+                            <div class="carousel-slide">
+                                <img src="/api/placeholder/400/300" alt="Project 3 - Image 1" class="project-img" onclick="openLightbox('carousel3', 0)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="/api/placeholder/400/300" alt="Project 3 - Image 2" class="project-img" onclick="openLightbox('carousel3', 1)">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="/api/placeholder/400/300" alt="Project 3 - Image 3" class="project-img" onclick="openLightbox('carousel3', 2)">
+                            </div>
+                        </div>
+                        <button class="carousel-button prev-button" onclick="moveSlide('carousel3', -1)">&#10094;</button>
+                        <button class="carousel-button next-button" onclick="moveSlide('carousel3', 1)">&#10095;</button>
+                        <div class="carousel-dots" id="dots3"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Task Management App</h3>
+                        <p class="project-description">A mobile-first task management application with collaborative features and deadline notifications.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Dart</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add more project cards as needed -->
+            </div>
+        </section>
+        
+        <section id="about" class="about-section">
+            <img src="/api/placeholder/400/400" alt="Your Photo" class="about-img">
+            <div>
+                <h2>About Me</h2>
+                <p>I'm a passionate IT professional specializing in web development and software engineering. With a background in computer science and several years of industry experience, I create efficient, user-friendly digital solutions.</p>
+                <p>My expertise includes front-end and back-end development, database design, and system architecture. I'm always eager to learn new technologies and tackle challenging projects.</p>
+            </div>
+        </section>
+    </div>
+    
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Interested in working together? Feel free to reach out through any of these channels:</p>
+            <div class="contact-links">
+                <a href="mailto:your.email@example.com" class="contact-link">your.email@example.com</a>
+                <a href="https://linkedin.com/in/yourprofile" class="contact-link">LinkedIn</a>
+                <a href="https://github.com/yourusername" class="contact-link">GitHub</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <img src="" alt="Expanded Image" class="lightbox-img" id="lightbox-img">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+            <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</button>
+            <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize all carousels
+        document.addEventListener('DOMContentLoaded', function() {
+            initCarousel('carousel1', 'dots1');
+            initCarousel('carousel2', 'dots2');
+            initCarousel('carousel3', 'dots3');
+        });
+
+        // Current slide indices for each carousel
+        const currentSlides = {
+            carousel1: 0,
+            carousel2: 0,
+            carousel3: 0
+        };
+
+        // Initialize a specific carousel
+        function initCarousel(carouselId, dotsId) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dotsContainer = document.getElementById(dotsId);
+            
+            // Create dots
+            for (let i = 0; i < slides.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.onclick = function() { showSlide(carouselId, i); };
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Move to a specific slide
+        function showSlide(carouselId, index) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dots = document.getElementById('dots' + carouselId.slice(-1)).querySelectorAll('.dot');
+            
+            // Update current slide index
+            currentSlides[carouselId] = index;
+            
+            // Move the slides
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+            
+            // Update dots
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = 'dot' + (i === index ? ' active' : '');
+            }
+        }
+
+        // Move the carousel slides
+        function moveSlide(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            let newIndex = currentSlides[carouselId] + direction;
+            
+            // Handle wrapping
+            if (newIndex < 0) newIndex = slides.length - 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            
+            showSlide(carouselId, newIndex);
+        }
+
+        // Lightbox variables
+        let currentLightboxCarousel = '';
+        let currentLightboxIndex = 0;
+
+        // Open the lightbox
+        function openLightbox(carouselId, index) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const img = slides[index].querySelector('img');
+            
+            // Set the lightbox image and caption
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox-caption').textContent = img.alt;
+            
+            // Store the current carousel and index
+            currentLightboxCarousel = carouselId;
+            currentLightboxIndex = index;
+            
+            // Show the lightbox
+            document.getElementById('lightbox').classList.add('active');
+            
+            // Prevent scrolling of the body
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close the lightbox
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Navigate through images in the lightbox
+        function navigateLightbox(direction) {
+            const carousel = document.getElementById(currentLightboxCarousel);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            
+            let newIndex = currentLightboxIndex + direction;
+            
+            // Handle wrapping
+            if (newIndex < 0) newIndex = slides.length - 1;
+            if (newIndex >= slides.length) newIndex = 0;
+            
+            // Update the lightbox
+            const img = slides[newIndex].querySelector('img');
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox-caption').textContent = img.alt;
+            
+            // Update the current index
+            currentLightboxIndex = newIndex;
+        }
+
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Handle keyboard navigation for lightbox
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
+        });
+    </script>
+</body>
+</html>
